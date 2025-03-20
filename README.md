@@ -144,16 +144,6 @@ Detailed API documentation is available in [API.md](API.md), covering:
 4. Authentication for private job listings
 5. API versioning strategy
 
-## Testing
-
-```bash
-# Run unit tests
-php artisan test
-
-# Run specific test suite
-php artisan test --filter=JobFilterTest
-```
-
 ## Available Data
 
 ### Job Types
