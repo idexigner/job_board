@@ -1,0 +1,41 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# If the requested filename exists, simply serve it.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Otherwise, send everything to index.php
+RewriteRule ^ index.php [L]
+
+# Prevent directory listing
+Options -Indexes
+
+# Prevent access to .env file
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent access to composer files
+<Files composer.json>
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files composer.lock>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Set default character set
+AddDefaultCharset UTF-8
+
+# Enable CORS
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# Handle OPTIONS method for CORS
+RewriteCond %{REQUEST_METHOD} OPTIONS
+RewriteRule ^(.*)$ $1 [R=200,L]

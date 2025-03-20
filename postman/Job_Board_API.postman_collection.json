@@ -1,0 +1,224 @@
+{
+	"info": {
+		"_postman_id": "your-collection-id",
+		"name": "Job Board API",
+		"description": "Collection for testing the Job Board API with advanced filtering capabilities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "simple_filter",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/jobs?filter=title LIKE %engineer%",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "title LIKE %engineer%"
+						},
+						{
+							"key": "filter",
+							"value": "company_name=ByteBridge",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "is_remote=true",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "job_type=full-time",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Relationship filter",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/jobs?filter=languages IS_ANY (Java,Python) AND locations = (London)",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "languages HAS_ANY (Python,JavaScript)",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "languages IS_ANY (Python,JavaScript)",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "filter=locations EXISTS",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "categories = (Data Science)",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "languages HAS_ANY (Python,JavaScript) AND categories = (Data Science)",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "languages IS_ANY (Java,Python) AND locations = (London)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EAV Filtering by Attribute Type",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/jobs?filter=attribute:education_level=[\"High School\", \"Bachelor\\'s Degree\"] AND attribute:experience_years<=2 ",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "attribute:experience_years>=5",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "attribute:education_level=High School",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "attribute:requires_travel=true",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "attribute:work_environment=[\"Remote\",\"Hybrid\"]",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "attribute:education_level=[\"High School\", \"Bachelor\\'s Degree\"] AND attribute:experience_years<=2 "
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logical Operators and Grouping",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/jobs?filter=salary_min>=50000 AND (job_type=full-time OR job_type=contract)",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "title LIKE Engineer AND is_remote=true",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "locations HAS_ANY (New York,San Francisco) OR is_remote=true",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "(languages HAS_ANY (Python,Java) OR languages HAS_ANY (JavaScript)) AND is_remote=true",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "salary_min>=50000 AND (job_type=full-time OR job_type=contract)"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Complex Queries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/jobs",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "title LIKE Engineer AND categories = (Full Stack Development) AND (locations = (New York) OR is_remote=true)",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "categories = (Data Science) AND languages = (Python) AND attribute:experience_years>=5",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "salary_min>=45000 AND is_remote=true AND languages HAS_ANY (JavaScript,Python,Java) AND attribute:work_environment=[\"Remote\"]",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "job_type=full-time AND attribute:experience_years>=3 AND attribute:certification_required=true AND (languages HAS_ANY (Python,JavaScript))",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
